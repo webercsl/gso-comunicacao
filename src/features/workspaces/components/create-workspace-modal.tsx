@@ -28,7 +28,7 @@ export const CreateWorkspaceModal = () => {
         e.preventDefault();
 
         mutate({ name }, {
-            onSucess(id) {
+            onSuccess(id) {
                 toast.success("Workspace created");
                 router.push(`/workspace/${id}`);
                 handleClose();
