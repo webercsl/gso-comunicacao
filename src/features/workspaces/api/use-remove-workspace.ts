@@ -7,7 +7,7 @@ type RequestType = { id: Id<"workspaces"> };
 type ResponseType = Id<"workspaces"> | null;
 
 type Options = {
-    onSucess?: (data: Id<"workspaces">) => void;
+    onSuccess?: (data: Id<"workspaces">) => void;
     onError?: (error: Error) => void;
     onSettled?: () => void;
     throwError?: boolean;
@@ -16,10 +16,10 @@ type Options = {
 export const useRemoveWorkspace = () => {
     const [data, setData] = useState<ResponseType>(null);
     const [error, setError] = useState<Error | null>(null);
-    const [status, setStatus] = useState<"sucess" | "error" | "settled" | "pending" | null>(null);
+    const [status, setStatus] = useState<"success" | "error" | "settled" | "pending" | null>(null);
 
     const isPending = useMemo(() => status === "pending", [status]);
-    const isSucess = useMemo(() => status === "sucess", [status]);
+    const isSuccess = useMemo(() => status === "success", [status]);
     const isError = useMemo(() => status === "error", [status]);
     const isSettled = useMemo(() => status === "settled", [status]);
 
@@ -32,7 +32,7 @@ export const useRemoveWorkspace = () => {
             setStatus("pending");
 
             const response= await mutation(values);
-            options?.onSucess?.(response);
+            options?.onSuccess?.(response);
             return response;
         } catch (error) {
             setStatus("error");
@@ -51,7 +51,7 @@ export const useRemoveWorkspace = () => {
         data,
         error,
         isPending,
-        isSucess,
+        isSuccess,
         isError,
         isSettled,
     };

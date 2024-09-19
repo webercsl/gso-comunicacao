@@ -17,10 +17,10 @@ type Options = {
 export const useCreateWorkspace = () => {
     const [data, setData] = useState<ResponseType>(null);
     const [error, setError] = useState<Error | null>(null);
-    const [status, setStatus] = useState<"sucess" | "error" | "settled" | "pending" | null>(null);
+    const [status, setStatus] = useState<"success" | "error" | "settled" | "pending" | null>(null);
 
     const isPending = useMemo(() => status === "pending", [status]);
-    const isSucess = useMemo(() => status === "sucess", [status]);
+    const isSuccess = useMemo(() => status === "success", [status]);
     const isError = useMemo(() => status === "error", [status]);
     const isSettled = useMemo(() => status === "settled", [status]);
 
@@ -52,7 +52,7 @@ export const useCreateWorkspace = () => {
         data,
         error,
         isPending,
-        isSucess,
+        isSuccess,
         isError,
         isSettled,
     };
