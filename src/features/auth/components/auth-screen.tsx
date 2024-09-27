@@ -1,9 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from 'next/dynamic';
+
 import { SignInFlow } from "../types";
-import { SignInCard } from "./sign-in-card";
-import { SignUpCard } from "./sign-up-card";
+
+const SignInCard = dynamic(() => import('./sign-in-card').then(mod => mod.SignInCard), { ssr: false });
+const SignUpCard = dynamic(() => import('./sign-up-card').then(mod => mod.SignUpCard), { ssr: false });
 
 export const AuthScreen = () => {
     const [state, setState] = useState<SignInFlow>("signIn");
