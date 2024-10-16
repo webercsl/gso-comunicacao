@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Sistema de Comunicação Interna Empresarial
+Este repositório contém o código-fonte de um sistema de comunicação interno desenvolvido para facilitar a colaboração e troca de informações entre os membros de uma organização. O sistema oferece funcionalidades avançadas de chat em tempo real, incluindo canais, mensagens diretas, threads e reações, promovendo um ambiente produtivo e eficiente para equipes de trabalho.
 
-## Getting Started
+Funcionalidades
+Espaços de Trabalho: Cada usuário pode participar de múltiplos espaços de trabalho para organizar suas comunicações por departamentos ou projetos.
+Canais: Criação de canais públicos ou privados para facilitar a comunicação em grupo.
+Mensagens Diretas: Comunicação individual entre usuários dentro do sistema.
+Threads: Organização de conversas dentro de tópicos específicos para evitar confusão em discussões de grupo.
+Reações às Mensagens: Usuários podem reagir às mensagens com emojis para uma comunicação mais dinâmica e informal.
+Edição e Exclusão de Mensagens: Os usuários têm controle sobre as mensagens enviadas, podendo editá-las ou excluí-las quando necessário.
+Gestão de Membros: Funções de administrador e controle de permissões para garantir a segurança e a organização dentro dos espaços de trabalho.
+Tecnologias Utilizadas
+Este projeto foi construído com as seguintes tecnologias:
 
-First, run the development server:
+Next.js: Framework React para renderização e geração de páginas estáticas ou dinâmicas.
+React: Biblioteca JavaScript para construção da interface do usuário.
+TypeScript: Utilizado para garantir tipagem estática e aumentar a confiabilidade do código.
+Tailwind CSS: Framework CSS para estilização rápida e responsiva.
+Shadcn UI: Design system para componentes UI reutilizáveis.
+Convex: Utilizado como banco de dados e para a implementação da lógica de backend em tempo real, além de ser responsável pelo armazenamento de imagens de forma serverless.
+MongoDB: Banco de dados NoSQL utilizado para armazenamento de informações estruturadas.
+Node.js: Backend do sistema, utilizado para manipulação de dados e operações assíncronas.
+Requisitos para Rodar o Projeto Localmente
+Para rodar este projeto localmente, siga os passos abaixo:
 
-```bash
+1. Pré-requisitos
+Certifique-se de ter os seguintes softwares instalados em sua máquina:
+
+Node.js (versão 18 ou superior)
+npm (ou yarn)
+2. Clonar o Repositório
+bash
+Copiar código
+git clone https://github.com/seuusuario/nome-do-repositorio.git
+cd nome-do-repositorio
+3. Instalar Dependências
+bash
+Copiar código
+npm install
+4. Configuração das Variáveis de Ambiente
+Crie um arquivo .env.local na raiz do projeto e adicione as seguintes variáveis de ambiente:
+
+bash
+Copiar código
+NEXT_PUBLIC_CONVEX_URL=URL_DO_CONVEX
+MONGO_URI=URL_DO_MONGODB
+5. Rodar o Projeto
+bash
+Copiar código
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+O projeto estará disponível em http://localhost:3000.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Estrutura do Projeto
+/pages: Contém as rotas da aplicação e o layout principal.
+/components: Componentes reutilizáveis da interface de usuário.
+/lib: Funções auxiliares e integrações com o backend (Convex, MongoDB).
+/styles: Estilos globais e configurações de Tailwind CSS.
+/public: Arquivos estáticos, como ícones e imagens.
+Deploy
+O projeto está configurado para ser deployado na Vercel. Para fazer o deploy, basta conectar o repositório ao Vercel e configurar as variáveis de ambiente.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Contribuição
+Contribuições são bem-vindas! Se você encontrar algum problema ou tiver sugestões de melhorias, sinta-se à vontade para abrir uma issue ou enviar um pull request.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Licença
+Este projeto é licenciado sob a MIT License.
