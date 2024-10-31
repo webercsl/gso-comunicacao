@@ -12,6 +12,7 @@ import { useConfirm } from "@/hooks/use-confirm";
 
 import { Hint } from "./hint";
 import { Toolbar } from "./toolbar";
+import { ThreadBar } from "./thread-bar";
 import { Thumbnail } from "./thumbnail";
 import { Reactions } from "./reactions";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
@@ -43,6 +44,7 @@ interface MessageProps {
     hideThreadButton?: boolean;
     threadCount?: number;
     threadImage?: string;
+    threadName?: string;
     threadTimestamp?: number;
 };
 
@@ -67,9 +69,10 @@ export const Message = ({
     hideThreadButton,
     threadCount,
     threadImage,
+    threadName,
     threadTimestamp,
 }: MessageProps) => {
-    const { parentMessageId ,onOpenMessage, onClose } = usePanel();
+    const { parentMessageId, onOpenMessage, onOpenProfile, onClose } = usePanel();
 
     const [ConfirmDialog, confirm] = useConfirm(
         "Delete message",
@@ -80,7 +83,7 @@ export const Message = ({
     const { mutate: removeMessage, isPending: isRemovingMessage } = useRemoveMessage();
     const { mutate: toggleReaction, isPending: isTogglingReaction } = useToggleReaction();
 
-    const isPending = isUpdatingMessage;
+    const isPending = isUpdatingMessage || isTogglingReaction;
 
     const handleReaction = (value: string) => {
         toggleReaction({ messageId: id, value }, {
@@ -128,8 +131,8 @@ export const Message = ({
                 <div className={cn(
                     "flex flex-col gap-2 p-1.5 px-5 hover:bg-gray-100/60 group relative",
                     isEditing && "bg-[#f2c74433] hover:bg-[#f2c74433]",
-                    isRemovingMessage && 
-                        "bg-rose-500/50 transform transition-all scale-y-0 origin-bottom duration-200"
+                    isRemovingMessage &&
+                    "bg-rose-500/50 transform transition-all scale-y-0 origin-bottom duration-200"
                 )}>
                     <div className="flex items-start gap-2">
                         <Hint label={formatFullTime(new Date(createdAt))}>
@@ -157,6 +160,13 @@ export const Message = ({
                                     </span>
                                 ) : null}
                                 <Reactions data={reactions} onChange={handleReaction} />
+                                <ThreadBar
+                                    count={threadCount}
+                                    image={threadImage}
+                                    timestamp={threadTimestamp}
+                                    name={threadName}
+                                    onClick={() => onOpenMessage(id)}
+                                />
                             </div>
                         )}
                     </div>
@@ -183,11 +193,11 @@ export const Message = ({
             <div className={cn(
                 "flex flex-col gap-2 p-1.5 px-5 hover:bg-gray-100/60 group relative",
                 isEditing && "bg-[#f2c74433] hover:bg-[#f2c74433]",
-                isRemovingMessage && 
-                    "bg-rose-500/50 transform transition-all scale-y-0 origin-bottom duration-200"
+                isRemovingMessage &&
+                "bg-rose-500/50 transform transition-all scale-y-0 origin-bottom duration-200"
             )}>
                 <div className="flex items-start gap-2">
-                    <button>
+                    <button onClick={() => onOpenProfile(memberId)}>
                         <Avatar>
                             <AvatarImage src={authorImage} />
                             <AvatarFallback>
@@ -208,7 +218,7 @@ export const Message = ({
                     ) : (
                         <div className="flex flex-col w-full overflow-hidden">
                             <div className="text-sm">
-                                <button onClick={() => { }} className="font-bold text-primary hover:underline">
+                                <button onClick={() => onOpenProfile(memberId)} className="font-bold text-primary hover:underline">
                                     {authorName}
                                 </button>
                                 <span>&nbsp;&nbsp;</span>
@@ -224,6 +234,13 @@ export const Message = ({
                                 <span className="text-xs text-muted-foreground">(edited)</span>
                             ) : null}
                             <Reactions data={reactions} onChange={handleReaction} />
+                            <ThreadBar
+                                count={threadCount}
+                                image={threadImage}
+                                timestamp={threadTimestamp}
+                                name={threadName}
+                                onClick={() => onOpenMessage(id)}
+                            />
                         </div>
                     )}
                 </div>

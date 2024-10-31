@@ -16,7 +16,11 @@ export const UserButton = () => {
     const { data, isLoading } = useCurrentUser();
 
     if (isLoading) {
-        return <Loader className="size-4 animate-spin text-muted-foreground" />
+        return (
+            <div className="h-screen flex items-center justify-center">
+                <Loader className="size-6 animate-spin text-muted-foreground" />
+            </div>
+        );
     }
 
     if (!data) {
@@ -37,8 +41,8 @@ export const UserButton = () => {
                     </AvatarFallback>
                 </Avatar>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="center" side="right" className="w-60">
-                <DropdownMenuItem onClick={() => signOut()} className="h-10">
+            <DropdownMenuContent align="center" side="right" className="w-25">
+                <DropdownMenuItem onClick={() => signOut()} className="h-10 cursor-pointer">
                     <LogOut className="size-4 mr-2"/>
                     Log out
                 </DropdownMenuItem>
