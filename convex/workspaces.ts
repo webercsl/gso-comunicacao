@@ -12,7 +12,7 @@ const generateCode = () => {
     return code;
 }
 
-export const join = mutation ({
+export const join = mutation({
     args: {
         joinCode: v.string(),
         workspaceId: v.id("workspaces"),
@@ -122,7 +122,7 @@ export const create = mutation({
     },
 })
 
-export const get = query ({
+export const get = query({
     args: {},
     handler: async (ctx) => {
         const userId = await auth.getUserId(ctx);
@@ -132,9 +132,9 @@ export const get = query ({
         }
 
         const members = await ctx.db
-        .query("members")
-        .withIndex("by_user_id", (q) => q.eq("userId", userId))
-        .collect();
+            .query("members")
+            .withIndex("by_user_id", (q) => q.eq("userId", userId))
+            .collect();
 
         const workspaceIds = members.map((member) => member.workspaceId);
 
@@ -152,8 +152,8 @@ export const get = query ({
     },
 });
 
-export const getInfoById = query ({
-    args: { id: v.id("workspaces")},
+export const getInfoById = query({
+    args: { id: v.id("workspaces") },
     handler: async (ctx, args) => {
         const userId = await auth.getUserId(ctx);
 
@@ -178,7 +178,7 @@ export const getInfoById = query ({
 });
 
 export const getById = query({
-    args: { id: v.id("workspaces")},
+    args: { id: v.id("workspaces") },
     handler: async (ctx, args) => {
         const userId = await auth.getUserId(ctx);
 
@@ -219,7 +219,7 @@ export const update = mutation({
                 q.eq("workspaceId", args.id).eq("userId", userId)
             )
             .unique();
-        
+
         if (!member || member.role !== "admin") {
             throw new Error("Unauthorized");
         }
@@ -249,20 +249,52 @@ export const remove = mutation({
                 q.eq("workspaceId", args.id).eq("userId", userId)
             )
             .unique();
-        
+
         if (!member || member.role !== "admin") {
             throw new Error("Unauthorized");
         }
 
-        const [members] = await Promise.all([
+        const [members, channels, conversations, messages, reactions] = await Promise.all([
             ctx.db
                 .query("members")
+                .withIndex("by_workspace_id", (q) => q.eq("workspaceId", args.id))
+                .collect(),
+            ctx.db
+                .query("channels")
+                .withIndex("by_workspace_id", (q) => q.eq("workspaceId", args.id))
+                .collect(),
+            ctx.db
+                .query("conversations")
+                .withIndex("by_workspace_id", (q) => q.eq("workspaceId", args.id))
+                .collect(),
+            ctx.db
+                .query("messages")
+                .withIndex("by_workspace_id", (q) => q.eq("workspaceId", args.id))
+                .collect(),
+            ctx.db
+                .query("reactions")
                 .withIndex("by_workspace_id", (q) => q.eq("workspaceId", args.id))
                 .collect(),
         ]);
 
         for (const member of members) {
             await ctx.db.delete(member._id)
+        }
+
+        for (const channel of channels) {
+            await ctx.db.delete(channel._id)
+        }
+
+        for (const conversation of conversations) {
+            await ctx.db.delete(conversation._id)
+        }
+
+        for (const message of messages) {
+            await ctx.db.delete(message._id)
+        }
+
+        for (const reaction of reactions) {
+            await ctx.db.delete(reaction._id)
         }
 
         await ctx.db.delete(args.id);

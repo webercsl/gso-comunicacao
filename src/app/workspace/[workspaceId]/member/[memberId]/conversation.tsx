@@ -1,10 +1,10 @@
 import { Loader } from "lucide-react";
 
-import { useMemberId } from "@/hooks/use-member-id";
-
 import { useGetMember } from "@/features/members/api/use-get-member";
 import { useGetMessages } from "@/features/messages/api/use-get-messages";
 
+import { usePanel } from "@/hooks/use-panel";
+import { useMemberId } from "@/hooks/use-member-id";
 import { MessageList } from "@/components/message-list";
 
 import Header from "./header";
@@ -18,6 +18,8 @@ interface ConversationProps {
 
 export const Conversation = ({ id }: ConversationProps) => {
     const memberId = useMemberId();
+
+    const { onOpenProfile } = usePanel();
 
     const { data: member, isLoading: memberLoading } = useGetMember({ id: memberId});
     const { results, status, loadMore } = useGetMessages({
@@ -37,7 +39,7 @@ export const Conversation = ({ id }: ConversationProps) => {
             <Header 
                 memberName={Array.isArray(member) ? undefined : member?.user.name}
                 memberImage={Array.isArray(member) ? undefined : member?.user.image}
-                onClick={() => {}}
+                onClick={() => onOpenProfile(memberId)}
             />
             <MessageList 
                 data={results}
