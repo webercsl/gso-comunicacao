@@ -50,7 +50,7 @@ export const PreferencesModal = ({
         removeWorkspace({
             id: workspaceId
         }, {
-            onSucess: () => {
+            onSuccess: () => {
                 toast.success("Workspace removed");
                 router.replace("/");
             },
@@ -67,7 +67,7 @@ export const PreferencesModal = ({
             id: workspaceId,
             name: value,
         }, {
-            onSucess: () => {
+            onSuccess: () => {
                 toast.success("Workspace updated");
                 setEditOpen(false);
             },
