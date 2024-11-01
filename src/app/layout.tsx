@@ -27,9 +27,9 @@ export default function RootLayout({
         <body className={inter.className}>
           <ConvexClientProvider>
             <JotaiProvider>
+              <Toaster />
+              <Modals />
               <NuqsAdapter>
-                <Toaster />
-                <Modals />
                 {children}
               </NuqsAdapter>
             </JotaiProvider>
