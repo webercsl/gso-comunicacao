@@ -37,21 +37,21 @@ export const Conversation = ({ id }: ConversationProps) => {
     return (
         <div className="flex flex-col h-full">
             <Header 
-                memberName={Array.isArray(member) ? undefined : member?.user.name}
-                memberImage={Array.isArray(member) ? undefined : member?.user.image}
+                memberName={member?.user.name}
+                memberImage={member?.user.image}
                 onClick={() => onOpenProfile(memberId)}
             />
             <MessageList 
                 data={results}
                 variant="conversation"
-                memberImage={Array.isArray(member) ? undefined : member?.user.image}
-                memberName={Array.isArray(member) ? undefined : member?.user.name}
+                memberImage={member?.user.image}
+                memberName={member?.user.name}
                 loadMore={loadMore}
                 isLoadingMore={status === "LoadingMore"}
                 canLoadMore={status === "CanLoadMore"}
             />
             <ChatInput
-                placeholder={`Message ${Array.isArray(member) ? '' : member?.user.name}`} 
+                placeholder={`Message ${member?.user.name}`}
                 conversationId={id}
             />
         </div>

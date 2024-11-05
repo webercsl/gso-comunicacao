@@ -1,10 +1,9 @@
-import { count } from 'console';
 import { v } from "convex/values";
 import { paginationOptsValidator } from "convex/server";
 
 import { auth } from "./auth";
 import { Doc, Id } from "./_generated/dataModel";
-import { mutation, query, QueryCtx} from "./_generated/server";
+import { mutation, query, QueryCtx } from "./_generated/server";
 
 const populateThread = async (ctx: QueryCtx, messageId: Id<"messages">) => {
     const messages = await ctx.db
@@ -28,7 +27,7 @@ const populateThread = async (ctx: QueryCtx, messageId: Id<"messages">) => {
 
     if (!lastMessageMember) {
         return {
-            count: messages.length,
+            count: 0,
             image: undefined,
             timestamp: 0,
             name: "",
@@ -217,7 +216,7 @@ export const getById = query({
             user,
             member,
             reactions: reactionsWithoutMemberIdProperty,
-        }
+        };
     },
 });
 
@@ -264,7 +263,7 @@ export const get = query({
                 await Promise.all(
                     results.page.map(async (message) => {
                         const member = await populateMember(ctx, message.memberId);
-                        const user = member ? await populateUser(ctx, member.userId): null;
+                        const user = member ? await populateUser(ctx, member.userId) : null;
 
                         if (!member || !user) {
                             return null;
@@ -291,7 +290,7 @@ export const get = query({
 
                                 if (existingReaction) {
                                     existingReaction.memberIds = Array.from(
-                                        new Set([...existingReaction.memberIds, reaction.memberId]),
+                                        new Set([...existingReaction.memberIds, reaction.memberId])
                                     );
                                 } else {
                                     acc.push({

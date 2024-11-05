@@ -19,7 +19,7 @@ const MemberIdPage = () => {
 
     const [conversationId, setConversationId] = useState<Id<"conversations"> | null>(null);
 
-    const { data, mutate, isPending } = useCreateOrGetConversation();
+    const { mutate, isPending } = useCreateOrGetConversation();
 
     useEffect(() => {
         mutate({
@@ -33,7 +33,7 @@ const MemberIdPage = () => {
                 toast.error("Failed to create or get conversation")
             }
         })
-    }, [memberId, mutate, workspaceId]);
+    }, [memberId, workspaceId, mutate]);
 
     if (isPending) {
         return (

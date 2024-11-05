@@ -1,13 +1,15 @@
 import Quill from "quill";
-import { useRef, useState } from "react";
+
+import { toast } from "sonner";
 import dynamic from "next/dynamic";
+import { useRef, useState } from "react";
 
 import { useCreateMessage } from "@/features/messages/api/use-create-message";
 import { useGenerateUploadUrl } from "@/features/upload/api/use-generate-upload-url";
 
 import { useChannelId } from "@/hooks/use-channel-id";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
-import { toast } from "sonner";
+
 import { Id } from "../../../../../../convex/_generated/dataModel";
 
 const Editor = dynamic(() => import("@/components/editor"), { ssr: false });
@@ -50,7 +52,7 @@ export const ChatInput = ({ placeholder }: ChatInputProps) => {
                 channelId,
                 workspaceId,
                 body,
-                image: undefined
+                image: undefined,
             };
 
             if (image) {

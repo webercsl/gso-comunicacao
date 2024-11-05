@@ -51,7 +51,7 @@ export const remove = mutation({
 export const update = mutation({
     args: {
         id: v.id("channels"),
-        name: v.string()
+        name: v.string(),
     },
     handler: async (ctx, args) => {
         const userId = await auth.getUserId(ctx);
@@ -83,7 +83,7 @@ export const update = mutation({
 
         return args.id;
     },
-})
+});
 
 export const create = mutation({
     args: {
@@ -110,7 +110,7 @@ export const create = mutation({
 
         const parsedName = args.name
             .replace(/\s+/g, "-")
-            .toLowerCase()
+            .toLowerCase();
 
         const channelId = await ctx.db.insert("channels", {
             name: parsedName,
@@ -151,7 +151,7 @@ export const getById = query({
 
         return channel;
     },
-})
+});
 
 export const get = query({
     args: {
@@ -184,4 +184,4 @@ export const get = query({
 
         return channels;
     },
-})
+});

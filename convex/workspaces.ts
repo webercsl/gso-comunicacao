@@ -1,6 +1,6 @@
 import { v } from "convex/values";
-import { mutation, query } from "./_generated/server";
 import { auth } from "./auth";
+import { mutation, query } from "./_generated/server";
 
 const generateCode = () => {
     const code = Array.from(
@@ -98,7 +98,6 @@ export const create = mutation({
             throw new Error("Unauthorized");
         }
 
-        // TODO: Create a proper method later
         const joinCode = generateCode();
 
         const workspaceId = await ctx.db.insert("workspaces", {
@@ -120,7 +119,7 @@ export const create = mutation({
 
         return workspaceId;
     },
-})
+});
 
 export const get = query({
     args: {},
@@ -164,7 +163,7 @@ export const getInfoById = query({
         const member = await ctx.db
             .query("members")
             .withIndex("by_workspace_id_user_id", (q) =>
-                q.eq("workspaceId", args.id).eq("userId", userId)
+                q.eq("workspaceId", args.id).eq("userId", userId),
             )
             .unique();
 
@@ -189,7 +188,7 @@ export const getById = query({
         const member = await ctx.db
             .query("members")
             .withIndex("by_workspace_id_user_id", (q) =>
-                q.eq("workspaceId", args.id).eq("userId", userId)
+                q.eq("workspaceId", args.id).eq("userId", userId),
             )
             .unique();
 
@@ -216,7 +215,7 @@ export const update = mutation({
         const member = await ctx.db
             .query("members")
             .withIndex("by_workspace_id_user_id", (q) =>
-                q.eq("workspaceId", args.id).eq("userId", userId)
+                q.eq("workspaceId", args.id).eq("userId", userId),
             )
             .unique();
 
@@ -246,7 +245,7 @@ export const remove = mutation({
         const member = await ctx.db
             .query("members")
             .withIndex("by_workspace_id_user_id", (q) =>
-                q.eq("workspaceId", args.id).eq("userId", userId)
+                q.eq("workspaceId", args.id).eq("userId", userId),
             )
             .unique();
 

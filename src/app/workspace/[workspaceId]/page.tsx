@@ -1,8 +1,8 @@
 "use client";
 
-import { Loader, TriangleAlert } from "lucide-react";
 import { useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { Loader, TriangleAlert } from "lucide-react";
 
 import { useGetChannels } from "@/features/channels/api/use-get-channels";
 import { useCurrentMember } from "@/features/members/api/use-current-member";

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { AlertTriangle, ChevronDown, Loader, MailIcon, XIcon } from "lucide-react";
+import { AlertTriangle, ChevronDown, ChevronDownIcon, Loader, MailIcon, XIcon } from "lucide-react";
 
 import { useConfirm } from "@/hooks/use-confirm";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
@@ -57,9 +57,7 @@ export const Profile = ({ memberId, onClose }: ProfileProps) => {
     const onRemove = async () => {
         const ok = await confirmRemove();
 
-        if (!ok) {
-            return;
-        }
+        if (!ok) return;
 
         removeMember({ id: memberId }, {
             onSuccess: () => {
@@ -75,9 +73,7 @@ export const Profile = ({ memberId, onClose }: ProfileProps) => {
     const onLeave = async () => {
         const ok = await confirmLeave();
 
-        if (!ok) {
-            return;
-        }
+        if (!ok)  return;
 
         removeMember({ id: memberId }, {
             onSuccess: () => {
@@ -94,9 +90,7 @@ export const Profile = ({ memberId, onClose }: ProfileProps) => {
     const onUpdate = async (role: "admin" | "member") => {
         const ok = await confirmUpdate();
 
-        if (!ok) {
-            return;
-        }
+        if (!ok) return;
 
         updateMember({ id: memberId, role }, {
             onSuccess: () => {
@@ -142,7 +136,7 @@ export const Profile = ({ memberId, onClose }: ProfileProps) => {
         );
     }
 
-    const avatarFallback = (!Array.isArray(member) && member.user?.name?.[0]) ?? "M";
+    const avatarFallback = member.user.name?.[0] ?? "M";
 
     return (
         <>
@@ -158,24 +152,26 @@ export const Profile = ({ memberId, onClose }: ProfileProps) => {
                 </div>
                 <div className="flex flex-col items-center justify-center p-4">
                     <Avatar className="max-w-[256px] max-h-[256px] size-full">
-                        <AvatarImage src={!Array.isArray(member) ? member.user.image : ""} />
-                        <AvatarFallback className="aspect-square text-6xl">{avatarFallback}</AvatarFallback>
+                        <AvatarImage src={member.user.image} />
+                        <AvatarFallback className="aspect-square text-6xl">
+                            {avatarFallback}
+                        </AvatarFallback>
                     </Avatar>
                 </div>
                 <div className="flex flex-col p-4">
-                    <p className="text-xl font-bold">{!Array.isArray(member) ? member.user.name : "Unknown"}</p>
+                    <p className="text-xl font-bold">{member.user.name}</p>
                     {currentMember?.role === "admin" &&
                         currentMember?._id !== memberId ? (
                         <div className="flex items-center gap-2 mt-4">
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
                                     <Button variant="outline" className="w-full capitalize">
-                                        {!Array.isArray(member) ? member.role : "Unknown"} <ChevronDown className="size-4 ml-2" />
+                                        {member.role} <ChevronDownIcon className="size-4 ml-2" />
                                     </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent className="w-full">
                                     <DropdownMenuRadioGroup
-                                        value={!Array.isArray(member) ? member.role : ""}
+                                        value={member.role}
                                         onValueChange={(role) => onUpdate(role as "admin" | "member")}
                                     >
                                         <DropdownMenuRadioItem value="admin">
@@ -213,10 +209,10 @@ export const Profile = ({ memberId, onClose }: ProfileProps) => {
                                 Email Adress
                             </p>
                             <Link
-                                href={`mailto:${!Array.isArray(member) ? member.user.email : ""}`}
+                                href={`mailto:${member.user.email}`}
                                 className="text-sm hover:underline text-[#1264a3]"
                             >
-                                {!Array.isArray(member) ? member.user.email : ""}
+                                {member.user.email}
                             </Link>
                         </div>
                     </div>

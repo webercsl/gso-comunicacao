@@ -2,8 +2,8 @@ import Image from "next/image";
 import { Delta, Op } from "quill/core";
 import { MdSend } from "react-icons/md";
 import { PiTextAa } from "react-icons/pi"
-import { ImageIcon, Smile, XIcon } from "lucide-react";
 import Quill, { type QuillOptions } from "quill";
+import { ImageIcon, Smile, XIcon } from "lucide-react";
 import { MutableRefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
@@ -36,7 +36,7 @@ const Editor = ({
     defaultValue = [],
     disabled = false,
     innerRef,
-    variant = "create",
+    variant = "create"
 }: EditorProps) => {
     const [text, setText] = useState("");
     const [image, setImage] = useState<File | null>(null);

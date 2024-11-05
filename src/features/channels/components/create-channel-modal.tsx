@@ -1,6 +1,6 @@
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import {
     Dialog,
@@ -40,12 +40,12 @@ export const CreateChannelModal = () => {
             { name, workspaceId },
             {
                 onSuccess: (id) => {
-                    toast.success("Created Channel");
+                    toast.success("Canal criado com sucesso");
                     router.push(`/workspace/${workspaceId}/channel/${id}`);
                     handleClose();
                 },
                 onError: () => {
-                    toast.error("Failed to create channel");
+                    toast.error("Falha ao criar canal");
                 },
             },
         );
@@ -68,12 +68,12 @@ export const CreateChannelModal = () => {
                         maxLength={80}
                         placeholder="e.g. plan-budget"
                     />
+                    <div className="flex justify-end">
+                        <Button disabled={isPending}>
+                            Create
+                        </Button>
+                    </div>
                 </form>
-                <div className="flex justify-end">
-                    <Button disabled={isPending}>
-                        Create
-                    </Button>
-                </div>
             </DialogContent>
         </Dialog>
     );

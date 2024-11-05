@@ -1,7 +1,8 @@
 import { v } from "convex/values";
-import { mutation, query, QueryCtx } from "./_generated/server";
+
 import { auth } from "./auth";
 import { Id } from "./_generated/dataModel";
+import { mutation, query, QueryCtx } from "./_generated/server";
 
 const populateUser = (ctx: QueryCtx, id: Id<"users">) => {
     return ctx.db.get(id);
@@ -13,7 +14,7 @@ export const getById = query({
         const userId = await auth.getUserId(ctx);
 
         if (!userId) {
-            return [];
+            return null;
         }
 
         const member = await ctx.db.get(args.id);
@@ -42,7 +43,7 @@ export const getById = query({
             ...member,
             user,
         };
-    }
+    },
 });
 
 export const get = query({
@@ -108,8 +109,8 @@ export const current = query({
         }
 
         return member;
-    }
-})
+    },
+});
 
 export const update = mutation({
     args: {
@@ -146,7 +147,7 @@ export const update = mutation({
 
         return args.id;
     },
-})
+});
 
 export const remove = mutation({
     args: {

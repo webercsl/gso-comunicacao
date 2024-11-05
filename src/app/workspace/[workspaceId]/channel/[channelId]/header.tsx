@@ -92,6 +92,7 @@ export const Header = ({ title }: HeaderProps) => {
                     <Button
                         variant="ghost"
                         className="text-lg font-semibold px-2 overflow-hidden w-auto"
+                        size="sm"
                     >
                         <span className="truncate"># {title}</span>
                         <FaChevronDown className="size-2.5 ml-2" />
@@ -162,5 +163,3 @@ export const Header = ({ title }: HeaderProps) => {
         </div>
     );
 };
-
-export default Header;

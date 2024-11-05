@@ -1,4 +1,3 @@
-import { current } from './users';
 import { v } from "convex/values";
 
 import { mutation } from "./_generated/server";
@@ -6,8 +5,8 @@ import { auth } from "./auth";
 
 export const createOrGet = mutation({
     args: {
-        workspaceId: v.id("workspaces"),
         memberId: v.id("members"),
+        workspaceId: v.id("workspaces"),
     },
     handler: async (ctx, args) => {
         const userId = await auth.getUserId(ctx);

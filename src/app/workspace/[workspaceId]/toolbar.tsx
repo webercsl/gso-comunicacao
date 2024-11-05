@@ -7,11 +7,9 @@ import { useGetMembers } from "@/features/members/api/use-get-members";
 import { useGetChannels } from "@/features/channels/api/use-get-channels";
 import { useGetWorkspace } from "@/features/workspaces/api/use-get-workspace";
 
-import { useWorkspaceId } from "@/hooks/use-workspace-id";
-
 import { Button } from "@/components/ui/button";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import {
-    Command,
     CommandDialog,
     CommandEmpty,
     CommandGroup,

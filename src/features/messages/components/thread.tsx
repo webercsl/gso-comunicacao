@@ -1,9 +1,9 @@
 import Quill from "quill";
 import { toast } from "sonner";
-import { differenceInMinutes, format, isToday, isYesterday, parseISO } from "date-fns";
 import dynamic from "next/dynamic";
 import { useRef, useState } from "react";
 import { AlertTriangle, Loader, XIcon } from "lucide-react";
+import { differenceInMinutes, format, isToday, isYesterday, parseISO } from "date-fns";
 
 import { useGetMessage } from "@/features/messages/api/use-get-message";
 import { useGetMessages } from "@/features/messages/api/use-get-messages";
@@ -36,15 +36,11 @@ type CreateMessageValues = {
 };
 
 const formatDateLabel = (dateStr: string) => {
-    const date = parseISO(dateStr);
-    if (isToday(date)) {
-        return "Today";
-    }
-    if (isYesterday(date)) {
-        return "Yesterday";
-    }
+    const date = new Date(dateStr);
+    if (isToday(date)) return "Today";
+    if (isYesterday(date)) return "Yesterday";
     return format(date, "EEEE, MMMM d");
-}
+};
 
 export const Thread = ({ messageId, onClose }: ThreadProps) => {
     const channelId = useChannelId();

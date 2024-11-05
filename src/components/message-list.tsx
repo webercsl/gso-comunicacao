@@ -28,13 +28,9 @@ interface MessageListProps {
 };
 
 const formatDateLabel = (dateStr: string) => {
-    const date = parseISO(dateStr);
-    if (isToday(date)) {
-        return "Today";
-    }
-    if (isYesterday(date)) {
-        return "Yesterday";
-    }
+    const date = new Date(dateStr);
+    if (isToday(date)) return "Today";
+    if (isYesterday(date)) return "Yesterday";
     return format(date, "EEEE, MMMM d");
 }
 

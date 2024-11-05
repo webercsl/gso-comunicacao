@@ -54,10 +54,10 @@ const formatFullTime = (date: Date) => {
 
 export const Message = ({
     id,
+    isAuthor,
     memberId,
     authorImage,
     authorName = "Member",
-    isAuthor,
     reactions,
     body,
     image,
@@ -163,8 +163,8 @@ export const Message = ({
                                 <ThreadBar
                                     count={threadCount}
                                     image={threadImage}
-                                    timestamp={threadTimestamp}
                                     name={threadName}
+                                    timestamp={threadTimestamp}
                                     onClick={() => onOpenMessage(id)}
                                 />
                             </div>
@@ -237,8 +237,8 @@ export const Message = ({
                             <ThreadBar
                                 count={threadCount}
                                 image={threadImage}
-                                timestamp={threadTimestamp}
                                 name={threadName}
+                                timestamp={threadTimestamp}
                                 onClick={() => onOpenMessage(id)}
                             />
                         </div>

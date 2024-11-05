@@ -1,4 +1,17 @@
+import { toast } from "sonner";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { TrashIcon } from "lucide-react";
+
+import { useUpdateWorkspace } from "@/features/workspaces/api/use-update-workspace";
+import { useRemoveWorkspace } from "@/features/workspaces/api/use-remove-workspace";
+
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+
+import { useConfirm } from "@/hooks/use-confirm";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
+
 import {
     Dialog,
     DialogContent,
@@ -8,15 +21,6 @@ import {
     DialogClose,
     DialogFooter,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { useRemoveWorkspace } from "@/features/workspaces/api/use-remove-workspace";
-import { useUpdateWorkspace } from "@/features/workspaces/api/use-update-workspace";
-import { useConfirm } from "@/hooks/use-confirm";
-import { useWorkspaceId } from "@/hooks/use-workspace-id";
-import { TrashIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { toast } from "sonner";
 
 interface PreferencesModalProps {
     open: boolean;
@@ -29,8 +33,8 @@ export const PreferencesModal = ({
     setOpen,
     initialValue,
 }: PreferencesModalProps) => {
-    const workspaceId = useWorkspaceId();
     const router = useRouter();
+    const workspaceId = useWorkspaceId();
     const [ConfirmDialog, confirm] = useConfirm(
         "Are you sure?",
         "This action is irreversible."
@@ -120,7 +124,7 @@ export const PreferencesModal = ({
                                         placeholder="Workspace name e.g. 'Work', 'Personal', 'Home'"
                                     />
                                     <DialogFooter>
-                                        <DialogClose>
+                                        <DialogClose asChild>
                                             <Button variant="outline" disabled={isUpdatingWorkspace}>
                                                 Cancel
                                             </Button>

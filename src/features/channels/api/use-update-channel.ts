@@ -2,7 +2,7 @@ import { useMutation } from "convex/react";
 import { useCallback, useMemo, useState } from "react";
 
 import { api } from "../../../../convex/_generated/api";
-import { Doc, Id } from "../../../../convex/_generated/dataModel";
+import { Id } from "../../../../convex/_generated/dataModel";
 
 type RequestType = { name: string; id: Id<"channels"> };
 type ResponseType = Id<"channels"> | null;
@@ -17,10 +17,10 @@ type Options = {
 export const useUpdateChannel = () => {
     const [data, setData] = useState<ResponseType>(null);
     const [error, setError] = useState<Error | null>(null);
-    const [status, setStatus] = useState<"sucess" | "error" | "settled" | "pending" | null>(null);
+    const [status, setStatus] = useState<"success" | "error" | "settled" | "pending" | null>(null);
 
     const isPending = useMemo(() => status === "pending", [status]);
-    const isSucess = useMemo(() => status === "sucess", [status]);
+    const isSuccess = useMemo(() => status === "success", [status]);
     const isError = useMemo(() => status === "error", [status]);
     const isSettled = useMemo(() => status === "settled", [status]);
 
@@ -52,7 +52,7 @@ export const useUpdateChannel = () => {
         data,
         error,
         isPending,
-        isSucess,
+        isSuccess,
         isError,
         isSettled,
     };

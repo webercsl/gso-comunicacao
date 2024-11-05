@@ -1,4 +1,12 @@
+import { Loader, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
+
+import { useGetWorkspace } from "@/features/workspaces/api/use-get-workspace";
+import { useGetWorkspaces } from "@/features/workspaces/api/use-get-workspaces";
+import { useCreateWorkspaceModal } from "@/features/workspaces/store/use-create-workspace-modal";
+
 import { Button } from "@/components/ui/button";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -6,12 +14,6 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useGetWorkspace } from "@/features/workspaces/api/use-get-workspace";
-import { useGetWorkspaces } from "@/features/workspaces/api/use-get-workspaces";
-import { useCreateWorkspaceModal } from "@/features/workspaces/store/use-create-workspace-modal";
-import { useWorkspaceId } from "@/hooks/use-workspace-id";
-import { Loader, Plus } from "lucide-react";
-import { useRouter } from "next/navigation";
 
 export const WorkspaceSwitcher = () => {
     const router = useRouter();
@@ -40,7 +42,7 @@ export const WorkspaceSwitcher = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent side="bottom" align="start" className="w-64">
                 <DropdownMenuItem
-                onClick={() => router.push(`/workspace/${workspaceId}`)}
+                    onClick={() => router.push(`/workspace/${workspaceId}`)}
                     className="cursor-pointer flex-col justify-start items-start capitalize"
                 >
                     {workspace?.name}

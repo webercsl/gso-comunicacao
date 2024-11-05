@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
+
 import { SignInFlow } from "../types"
 
 interface SignUpCardProps {
@@ -28,14 +29,14 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
         e.preventDefault();
 
         if (password !== confirmPassword) {
-            setError("Passwords do not match");
+            setError("Senhas não conferem");
             return;
         }
 
         setPending(true);
         signIn("password", { name, email, password, flow: "signUp"})
             .catch(() => {
-                setError("Something went wrong");
+                setError("Algo deu errado");
             })
             .finally(() => {
                 setPending(false);
@@ -72,14 +73,14 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
                         disabled={pending}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        placeholder="Full name"
+                        placeholder="Nome completo"
                         required
                     />
                     <Input 
                         disabled={pending}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Email"
+                        placeholder="E-mail"
                         type="email"
                         required
                     />
@@ -87,7 +88,7 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
                         disabled={pending}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Password"
+                        placeholder="Senha"
                         type="password"
                         required
                     />
@@ -95,12 +96,12 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
                         disabled={pending}
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        placeholder="Confirm Password"
+                        placeholder="Confirmar senha"
                         type="password"
                         required
                     />
                     <Button type="submit" className="w-full" size="lg" disabled={pending}>
-                        Continue
+                        Continuar
                     </Button>
                 </form>
                 <Separator />
@@ -113,7 +114,7 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
                         className="w-full relative"
                     >
                         <FcGoogle className="size-5 absolute top-3 left-2.5" />
-                        Continue with Google
+                        Continuar com Google
                     </Button>
                     <Button
                         disabled={false}
@@ -123,7 +124,7 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
                         className="w-full relative"
                     >
                         <FaGithub className="size-5 absolute top-3 left-2.5" />
-                        Continue with Github
+                        Continuar com Github
                     </Button>
                 </div>
                 <p className="text-xs text-muted-foreground">
