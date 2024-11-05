@@ -7,7 +7,7 @@ import { usePanel } from "@/hooks/use-panel";
 import { useMemberId } from "@/hooks/use-member-id";
 import { MessageList } from "@/components/message-list";
 
-import Header from "./header";
+import { Header } from "./header";
 import { ChatInput } from "./chat-input";
 
 import { Id } from "../../../../../../convex/_generated/dataModel";
