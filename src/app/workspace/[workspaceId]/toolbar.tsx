@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Hint } from "@/components/hint";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Info, Search } from "lucide-react";
@@ -90,9 +90,11 @@ export const Toolbar = () => {
                 </CommandDialog>
             </div>
             <div className="ml-auto flex-1 flex items-center justify-end">
-                <Button variant="transparent" size="iconSm">
-                    <Info className="size-5 text-white" />
-                </Button>
+                <Hint label="Projeto desenvolvido como parte da disciplina de Estágio do curso de Engenharia da Computação, pelo aluno Gustavo Weber.">
+                    <Button variant="transparent" size="iconSm">
+                        <Info className="size-5 text-white" />
+                    </Button>
+                </Hint>
             </div>
         </nav>
     );
