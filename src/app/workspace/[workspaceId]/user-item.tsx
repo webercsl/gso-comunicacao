@@ -14,7 +14,7 @@ const userItemVariants = cva(
         variants: {
             variant: {
                 default: "text-[#f9edffcc]",
-                active: "text-[#481349] bg-white/90 hover:bg-white/90",
+                active: "text-[#3B7E71] bg-white/90 hover:bg-white/90",
             },
         },
         defaultVariants: {
@@ -37,7 +37,10 @@ export const UserItem = ({
     variant,
 }: UserItemProps) => {
     const workspaceId = useWorkspaceId();
-    const avatarFallback = label.charAt(0).toUpperCase();
+    const nameParts = label.split(" ");
+    const avatarFallback = nameParts.length > 1 
+        ? nameParts[0].charAt(0).toUpperCase() + nameParts[1].charAt(0).toUpperCase()
+        : nameParts[0].charAt(0).toUpperCase();
 
     return (
         <Button
@@ -49,7 +52,7 @@ export const UserItem = ({
             <Link href={`/workspace/${workspaceId}/member/${id}`}>
                 <Avatar className="size-5 rounded-md mr-1">
                     <AvatarImage className="rounded-md" src={image} />
-                    <AvatarFallback className="rounded-md bg-sky-500 text-white text-xs">
+                    <AvatarFallback className="rounded-md text-white text-xs">
                         {avatarFallback}
                     </AvatarFallback>
                 </Avatar>

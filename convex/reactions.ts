@@ -23,19 +23,19 @@ export const toggle = mutation({
         const userId = await auth.getUserId(ctx);
 
         if (!userId) {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         const message = await ctx.db.get(args.messageId);
 
         if (!message) {
-            throw new Error("Message not found");
+            throw new Error("Mensagem não encontrada");
         }
 
         const member = await getMember(ctx, message.workspaceId, userId);
 
         if (!member) {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         const existingMessageReactionFromUser = await ctx.db

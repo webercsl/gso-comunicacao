@@ -34,10 +34,10 @@ const JoinPage = () => {
         mutate({ workspaceId, joinCode: value}, {
             onSuccess: (id) => {
                 router.replace(`/workspace/${id}`);
-                toast.success("Workspace joined.");
+                toast.success("Entrou no Workspace.");
             },
             onError: () => {
-                toast.error("Failed to join workspace");
+                toast.error("Falha ao entrar no Workspace");
             }
         })
     }
@@ -56,10 +56,10 @@ const JoinPage = () => {
             <div className="flex flex-col gap-y-4 items-center justify-center max-w-md">
                 <div className="flex flex-col gap-y-2 items-center justify-center">
                     <h1 className="text-2xl font-bold">
-                        Join {data?.name}
+                        Entrar em {data?.name}
                     </h1>
                     <p className="text-md text-muted-foreground">
-                        Enter the workspace code to join
+                        Digite o código do Workspace para entrar
                     </p>
                 </div>
                 <VerificationInput
@@ -82,7 +82,7 @@ const JoinPage = () => {
                     asChild
                 >
                     <Link href="/">
-                        Back to home
+                        Voltar para Home
                     </Link>
                 </Button>
             </div>

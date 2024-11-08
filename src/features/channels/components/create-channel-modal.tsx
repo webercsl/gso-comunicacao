@@ -55,7 +55,7 @@ export const CreateChannelModal = () => {
         <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Add a channel</DialogTitle>
+                    <DialogTitle>Criar um canal</DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <Input
@@ -66,11 +66,11 @@ export const CreateChannelModal = () => {
                         autoFocus
                         minLength={3}
                         maxLength={80}
-                        placeholder="e.g. plan-budget"
+                        placeholder="Ex.: projetos, design, marketing"
                     />
                     <div className="flex justify-end">
                         <Button disabled={isPending}>
-                            Create
+                            Criar
                         </Button>
                     </div>
                 </form>

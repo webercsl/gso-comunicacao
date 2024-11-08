@@ -1,3 +1,5 @@
+"use client"
+
 import { toast } from "sonner";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -31,7 +33,7 @@ export const CreateWorkspaceModal = () => {
 
         mutate({ name }, {
             onSuccess(id) {
-                toast.success("Workspace created");
+                toast.success("Workspace criado");
                 router.push(`/workspace/${id}`);
                 handleClose();
             },
@@ -42,7 +44,7 @@ export const CreateWorkspaceModal = () => {
         <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Add a workspace</DialogTitle>
+                    <DialogTitle>Criar um Workspace</DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <Input 
@@ -52,11 +54,11 @@ export const CreateWorkspaceModal = () => {
                         required
                         autoFocus
                         minLength={3}
-                        placeholder="Workspace name e.g. 'Word', 'Personal', 'Home'"
+                        placeholder="Nome do Workspace ex.: 'Trabalho', 'Pessoal', 'Casa'"
                     />
                     <div className="flex justify-end">
                         <Button disabled={isPending}>
-                            Create
+                            Criar
                         </Button>
                     </div>
                 </form>

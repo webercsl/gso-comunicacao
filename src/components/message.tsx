@@ -1,6 +1,7 @@
 import { toast } from "sonner";
 import dynamic from "next/dynamic";
 import { format, isToday, isYesterday } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
 import { useUpdateMessage } from "@/features/messages/api/use-update-message";
 import { useRemoveMessage } from "@/features/messages/api/use-remove-message";
@@ -49,7 +50,7 @@ interface MessageProps {
 };
 
 const formatFullTime = (date: Date) => {
-    return `${isToday(date) ? "Today" : isYesterday(date) ? "Yesterday" : format(date, "MMM d, yyyy")} at ${format(date, "h:mm:ss a")}`;
+    return `${isToday(date) ? "Hoje" : isYesterday(date) ? "Ontem" : format(date, "dd/MM/yyyy")} às ${format(date, "HH:mm:ss")}`;
 };
 
 export const Message = ({
@@ -75,8 +76,8 @@ export const Message = ({
     const { parentMessageId, onOpenMessage, onOpenProfile, onClose } = usePanel();
 
     const [ConfirmDialog, confirm] = useConfirm(
-        "Delete message",
-        "Are you sure you want to delete this message? This action cannot be undone.",
+        "Excluir mensagem",
+        "Você tem certeza que deseja excluir essa mensagem? Essa ação não pode ser desfeita.",
     );
 
     const { mutate: updateMessage, isPending: isUpdatingMessage } = useUpdateMessage();
@@ -88,7 +89,7 @@ export const Message = ({
     const handleReaction = (value: string) => {
         toggleReaction({ messageId: id, value }, {
             onError: () => {
-                toast.error("Failed to toggle reaction");
+                toast.error("Erro ao adicionar reação");
             },
         });
     };
@@ -100,14 +101,14 @@ export const Message = ({
 
         removeMessage({ id }, {
             onSuccess: () => {
-                toast.success("Message deleted");
+                toast.success("Mensagem excluída");
 
                 if (parentMessageId === id) {
                     onClose();
                 }
             },
             onError: () => {
-                toast.error("Failed to delete message");
+                toast.error("Erro ao excluir mensagem");
             },
         });
     };
@@ -115,11 +116,11 @@ export const Message = ({
     const handleUpdate = ({ body }: { body: string }) => {
         updateMessage({ id, body }, {
             onSuccess: () => {
-                toast.success("Message updated");
+                toast.success("Mensagem editada");
                 setEditingId(null);
             },
             onError: () => {
-                toast.error("Failed to update message");
+                toast.error("Erro ao editar mensagem");
             },
         });
     };
@@ -137,7 +138,7 @@ export const Message = ({
                     <div className="flex items-start gap-2">
                         <Hint label={formatFullTime(new Date(createdAt))}>
                             <button className="text-xs text-muted-foreground opacity-0 group-hover:opacity-100 w-[40px] leading-[22px] text-center hover:underline">
-                                {format(new Date(createdAt), "HH:mm")}
+                                {format(new Date(createdAt), "HH:mm", { locale: ptBR })}
                             </button>
                         </Hint>
                         {isEditing ? (
@@ -156,7 +157,7 @@ export const Message = ({
                                 <Thumbnail url={image} />
                                 {updatedAt ? (
                                     <span className="text-xs text-muted-foreground">
-                                        (edited)
+                                        (Editada)
                                     </span>
                                 ) : null}
                                 <Reactions data={reactions} onChange={handleReaction} />
@@ -185,7 +186,10 @@ export const Message = ({
             </>
         );
     }
-    const avatarFallback = authorName.charAt(0).toUpperCase();
+    const nameParts = authorName.split(" ");
+    const avatarFallback = nameParts.length > 1 
+        ? nameParts[0].charAt(0).toUpperCase() + nameParts[1].charAt(0).toUpperCase()
+        : nameParts[0].charAt(0).toUpperCase();
 
     return (
         <>
@@ -200,7 +204,7 @@ export const Message = ({
                     <button onClick={() => onOpenProfile(memberId)}>
                         <Avatar>
                             <AvatarImage src={authorImage} />
-                            <AvatarFallback>
+                            <AvatarFallback className="text-xl">
                                 {avatarFallback}
                             </AvatarFallback>
                         </Avatar>
@@ -224,7 +228,7 @@ export const Message = ({
                                 <span>&nbsp;&nbsp;</span>
                                 <Hint label={formatFullTime(new Date(createdAt))}>
                                     <button className="text-xs text-muted-foreground hover:underline">
-                                        {format(new Date(createdAt), "h:mm a")}
+                                        {format(new Date(createdAt), "HH:mm", { locale: ptBR })}
                                     </button>
                                 </Hint>
                             </div>

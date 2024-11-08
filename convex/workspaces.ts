@@ -21,17 +21,17 @@ export const join = mutation({
         const userId = await auth.getUserId(ctx);
 
         if (!userId) {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         const workspace = await ctx.db.get(args.workspaceId);
 
         if (!workspace) {
-            throw new Error("Workspace not found");
+            throw new Error("Workspace não encontrado");
         }
 
         if (workspace.joinCode !== args.joinCode.toLowerCase()) {
-            throw new Error("Invalid join code");
+            throw new Error("Código de entrada inválido");
         }
 
         const existingMember = await ctx.db
@@ -42,13 +42,13 @@ export const join = mutation({
             .unique();
 
         if (existingMember) {
-            throw new Error("Already a member of this workspace");
+            throw new Error("Você já é membro deste workspace");
         }
 
         await ctx.db.insert("members", {
             userId,
             workspaceId: workspace._id,
-            role: "member",
+            role: "membro",
         });
 
         return workspace._id;
@@ -63,7 +63,7 @@ export const newJoinCode = mutation({
         const userId = await auth.getUserId(ctx);
 
         if (!userId) {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         const member = await ctx.db
@@ -74,7 +74,7 @@ export const newJoinCode = mutation({
             .unique();
 
         if (!member || member.role !== "admin") {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         const joinCode = generateCode();
@@ -95,7 +95,7 @@ export const create = mutation({
         const userId = await auth.getUserId(ctx);
 
         if (!userId) {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         const joinCode = generateCode();
@@ -182,7 +182,7 @@ export const getById = query({
         const userId = await auth.getUserId(ctx);
 
         if (!userId) {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         const member = await ctx.db
@@ -209,7 +209,7 @@ export const update = mutation({
         const userId = await auth.getUserId(ctx);
 
         if (!userId) {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         const member = await ctx.db
@@ -220,7 +220,7 @@ export const update = mutation({
             .unique();
 
         if (!member || member.role !== "admin") {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         await ctx.db.patch(args.id, {
@@ -239,7 +239,7 @@ export const remove = mutation({
         const userId = await auth.getUserId(ctx);
 
         if (!userId) {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         const member = await ctx.db
@@ -250,7 +250,7 @@ export const remove = mutation({
             .unique();
 
         if (!member || member.role !== "admin") {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         const [members, channels, conversations, messages, reactions] = await Promise.all([

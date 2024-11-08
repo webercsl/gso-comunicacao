@@ -30,7 +30,7 @@ const ChannelIdPage = () => {
             <div className="h-full flex-1 flex flex-col gap-y-2 items-center justify-center">
                 <TriangleAlert className="size-5 text-muted-foreground" />
                 <span className=" text-sm text-muted-foreground">
-                    Channel not found
+                    Canal não encontrado
                 </span>
             </div>
         )
@@ -47,7 +47,7 @@ const ChannelIdPage = () => {
                 isLoadingMore={status === "LoadingMore"}
                 canLoadMore={status === "CanLoadMore"}
             />
-            <ChatInput placeholder={`Message # ${channel.name}`} />
+            <ChatInput placeholder={`Enviar mensagem para # ${channel.name}`} />
         </div>
     );
 };

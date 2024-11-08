@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
 interface ChannelHeroProps {
     name: string;
@@ -12,7 +13,7 @@ export const ChannelHero = ({ name, creationTime }: ChannelHeroProps) => {
                 # {name}
             </p>
             <p className="font-normal text-slate-800 mb-4">
-                This channel was created on {format(creationTime, "MMMM do, yyyy")}. This is the very beginning of the <strong>{name}</strong> channel.
+                Este canal foi criado no dia {format(creationTime, "dd 'de' MMMM 'de' yyyy", { locale: ptBR})}. Este é o início do canal <strong>{name}</strong>.
             </p>
         </div>
     )

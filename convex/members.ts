@@ -115,19 +115,19 @@ export const current = query({
 export const update = mutation({
     args: {
         id: v.id("members"),
-        role: v.union(v.literal("admin"), v.literal("member")),
+        role: v.union(v.literal("admin"), v.literal("membro")),
     },
     handler: async (ctx, args) => {
         const userId = await auth.getUserId(ctx);
 
         if (!userId) {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         const member = await ctx.db.get(args.id);
 
         if (!member) {
-            throw new Error("Member not found");
+            throw new Error("Usuário não encontrado");
         }
 
         const currentMember = await ctx.db
@@ -138,7 +138,7 @@ export const update = mutation({
             .unique();
 
         if (!currentMember || currentMember.role !== "admin") {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         await ctx.db.patch(args.id, {
@@ -157,13 +157,13 @@ export const remove = mutation({
         const userId = await auth.getUserId(ctx);
 
         if (!userId) {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         const member = await ctx.db.get(args.id);
 
         if (!member) {
-            throw new Error("Member not found");
+            throw new Error("Usuário não encontrado");
         }
 
         const currentMember = await ctx.db
@@ -174,15 +174,15 @@ export const remove = mutation({
             .unique();
 
         if (!currentMember) {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         if (member.role === "admin") {
-            throw new Error("Cannot remove admin");
+            throw new Error("Não pode remover um administrador");
         }
 
         if (currentMember._id === args.id && currentMember.role === "admin") {
-            throw new Error("Cannot remove yourself as an admin");
+            throw new Error("Não pode remover a si mesmo, pois é um administrador");
         }
 
         const [messages, reactions, conversations] = await Promise.all([

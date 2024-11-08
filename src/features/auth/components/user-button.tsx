@@ -31,22 +31,25 @@ export const UserButton = () => {
 
     const { image, name } = data;
 
-    const avatarFallback = name!.charAt(0).toUpperCase();
+    const nameParts = name!.split(" ");
+    const avatarFallback = nameParts.length > 1 
+        ? nameParts[0].charAt(0).toUpperCase() + nameParts[1].charAt(0).toUpperCase()
+        : nameParts[0].charAt(0).toUpperCase();
 
     return (
         <DropdownMenu modal={false}>
             <DropdownMenuTrigger className="outline-none relative">
                 <Avatar className="rounded-md size-10 hover:opacity-75 transition">
                     <AvatarImage className="rounded-md" alt={name} src={image}/>
-                    <AvatarFallback className="rounded-md bg-sky-500 text-white">
+                    <AvatarFallback className="rounded-md bg-teal-900 text-white">
                         {avatarFallback}
                     </AvatarFallback>
                 </Avatar>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="center" side="right" className="w-25">
+            <DropdownMenuContent align="center" side="right" className="w-20">
                 <DropdownMenuItem onClick={() => signOut()} className="h-10 cursor-pointer">
                     <LogOut className="size-4 mr-2"/>
-                    Log out
+                    Sair
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

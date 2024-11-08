@@ -27,7 +27,7 @@ export const Toolbar = ({
         <div className="absolute top-0 right-5">
             <div className="group-hover:opacity-100 opacity-0 transition-opacity border bg-white rounded-md shadow-sm">
                 <EmojiPopover
-                    hint="Add reaction"
+                    hint="Ver mais emojis"
                     onEmojiSelect={(emoji) => handleReaction(emoji)}
                 >
                     <Button
@@ -39,7 +39,7 @@ export const Toolbar = ({
                     </Button>
                 </EmojiPopover>
                 {!hideThreadButton && (
-                    <Hint label="Reply in thread">
+                    <Hint label="Responder na conversa">
                         <Button
                             variant="ghost"
                             size="iconSm"
@@ -51,7 +51,7 @@ export const Toolbar = ({
                     </Hint>
                 )}
                 {isAuthor && (
-                    <Hint label="Edit message">
+                    <Hint label="Editar mensagem">
                         <Button
                             variant="ghost"
                             size="iconSm"
@@ -63,14 +63,14 @@ export const Toolbar = ({
                     </Hint>
                 )}
                 {isAuthor && (
-                    <Hint label="Delete message">
+                    <Hint label="Excluir mensagem">
                         <Button
                             variant="ghost"
                             size="iconSm"
                             disabled={isPending}
                             onClick={handleDelete}
                         >
-                            <Trash className="size-4" />
+                            <Trash className="size-4" color="#E01E5A" />
                         </Button>
                     </Hint>
                 )}

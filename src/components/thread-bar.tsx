@@ -2,6 +2,7 @@ import { ChevronRight } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { ptBR } from "date-fns/locale";
 
 interface ThreadBarProps {
     count?: number;
@@ -18,7 +19,10 @@ export const ThreadBar = ({
     name = "Member",
     onClick,
 }: ThreadBarProps) => {
-    const avatarFallback = name.charAt(0).toUpperCase();
+    const nameParts = name.split(" ");
+    const avatarFallback = nameParts.length > 1 
+        ? nameParts[0].charAt(0).toUpperCase() + nameParts[1].charAt(0).toUpperCase()
+        : nameParts[0].charAt(0).toUpperCase();
 
     if (!count || !timestamp) {
         return null;
@@ -36,14 +40,14 @@ export const ThreadBar = ({
                         {avatarFallback}
                     </AvatarFallback>
                 </Avatar>
-                <span className="text-xs text-sky-700 hover:underline font-bold truncate">
-                    {count} {count > 1 ? "replies" : "reply"}
+                <span className="text-xs text-teal-900 hover:underline font-bold truncate">
+                    {count} {count > 1 ? "respostas" : "resposta"}
                 </span>
                 <span className="text-xs text-muted-foreground truncate group-hover/thread-bar:hidden block">
-                    Last reply {formatDistanceToNow(timestamp, { addSuffix: true })}
+                    Última resposta {formatDistanceToNow(timestamp, { addSuffix: true, locale: ptBR })}
                 </span>
                 <span className="text-xs text-muted-foreground truncate group-hover/thread-bar:block hidden">
-                    View thread
+                    Ver conversa
                 </span>
             </div>
             <ChevronRight className="size-4 text-muted-foreground ml-auto opacity-0 group-hover/thread-bar:opacity-100 transition shrink-0" />

@@ -46,7 +46,7 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
     };
 
     return (
-        <Card className="w-full h-full p-8">
+        <Card className="w-full h-full p-8 bg-[#ffffffe5] shadow-slate-950 border-none">
             <CardHeader className="px-0 pt-0">
                 <CardTitle>
                     Login para continuar
@@ -79,7 +79,7 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
                         type="password"
                         required
                     />
-                    <Button type="submit" className="w-full" size="lg" disabled={pending}>
+                    <Button type="submit" className="w-full bg-[#000] hover:bg-[#000000e1]" size="lg" disabled={pending}>
                         Continuar
                     </Button>
                 </form>
@@ -107,7 +107,7 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
                     </Button>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                    Não tem uma conta? <span onClick={() => setState("signUp")} className="text-sky-700 hover:underline cursor-pointer">Cadastre-se</span>
+                    Não tem uma conta? <span onClick={() => setState("signUp")} className="text-green-700 hover:underline cursor-pointer">Cadastre-se</span>
                 </p>
             </CardContent>
         </Card>

@@ -36,8 +36,8 @@ export const PreferencesModal = ({
     const router = useRouter();
     const workspaceId = useWorkspaceId();
     const [ConfirmDialog, confirm] = useConfirm(
-        "Are you sure?",
-        "This action is irreversible."
+        "Você tem certeza?",
+        "Essa ação é irreversível."
     );
 
     const [value, setValue] = useState(initialValue);
@@ -55,11 +55,11 @@ export const PreferencesModal = ({
             id: workspaceId
         }, {
             onSuccess: () => {
-                toast.success("Workspace removed");
+                toast.success("Workspace excluído");
                 router.replace("/");
             },
             onError: () => {
-                toast.error("Failed to remove workspace");
+                toast.error("Falha ao excluir Workspace");
             }
         })
     };
@@ -72,11 +72,11 @@ export const PreferencesModal = ({
             name: value,
         }, {
             onSuccess: () => {
-                toast.success("Workspace updated");
+                toast.success("Workspace atualizado");
                 setEditOpen(false);
             },
             onError: () => {
-                toast.error("Failed to update workspace");
+                toast.error("Falha ao atualizar Workspace");
             }
         })
     }
@@ -94,13 +94,13 @@ export const PreferencesModal = ({
                     <div className="px-4 pb-4 flex flex-col gap-y-2">
                         <Dialog open={editOpen} onOpenChange={setEditOpen} >
                             <DialogTrigger asChild>
-                                <div className="px-5 py-4 bg-white rounded-lg border cursor-pointer hover:bg-gray-500">
+                                <div className="px-5 py-4 bg-white rounded-lg border cursor-pointer hover:bg-gray-200">
                                     <div className="flex items-center justify-between">
                                         <p className="text-sm font-semibold">
-                                            Workspace name
+                                            Nome do Workspace
                                         </p>
                                         <p className="text-sm text-[#1264a3] hover:underline font-semibold">
-                                            Edit
+                                            Editar
                                         </p>
                                     </div>
                                     <p className="text-sm">
@@ -110,7 +110,7 @@ export const PreferencesModal = ({
                             </DialogTrigger>
                             <DialogContent>
                                 <DialogHeader>
-                                    <DialogTitle>Rename this workspace</DialogTitle>
+                                    <DialogTitle>Renomeie este Workspace</DialogTitle>
                                 </DialogHeader>
                                 <form className="space-y-4" onSubmit={handleEdit}>
                                     <Input
@@ -121,15 +121,15 @@ export const PreferencesModal = ({
                                         autoFocus
                                         minLength={3}
                                         maxLength={80}
-                                        placeholder="Workspace name e.g. 'Work', 'Personal', 'Home'"
+                                        placeholder="Ex. nome do Workspace: 'Trabalho', 'Anotações'"
                                     />
                                     <DialogFooter>
                                         <DialogClose asChild>
                                             <Button variant="outline" disabled={isUpdatingWorkspace}>
-                                                Cancel
+                                                Cancelar
                                             </Button>
                                         </DialogClose>
-                                        <Button disabled={isUpdatingWorkspace}>Save</Button>
+                                        <Button disabled={isUpdatingWorkspace}>Salvar</Button>
                                     </DialogFooter>
                                 </form>
                             </DialogContent>
@@ -137,10 +137,10 @@ export const PreferencesModal = ({
                         <button
                             disabled={isRemovingWorkspace}
                             onClick={handleRemove}
-                            className="flex items-center gap-x-2 px-5 py-4 bg-white rounded-lg border cursor-pointer hover:bg-gray-50 text-rose-600"
+                            className="flex items-center gap-x-2 px-5 py-4 bg-white rounded-lg border cursor-pointer hover:bg-gray-200 text-rose-600"
                         >
                             <TrashIcon className="size-4" />
-                            <p className="text-sm font-semibold">Delete Workspace</p>
+                            <p className="text-sm font-semibold">Excluir Workspace</p>
                         </button>
                     </div>
                 </DialogContent>

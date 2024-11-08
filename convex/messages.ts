@@ -80,19 +80,19 @@ export const remove = mutation({
         const userId = await auth.getUserId(ctx);
 
         if (!userId) {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         const message = await ctx.db.get(args.id);
 
         if (!message) {
-            throw new Error("Message not found");
+            throw new Error("Mensagem não encontrada");
         }
 
         const member = await getMember(ctx, message.workspaceId, userId);
 
         if (!member || member._id !== message.memberId) {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         await ctx.db.delete(args.id);
@@ -110,19 +110,19 @@ export const update = mutation({
         const userId = await auth.getUserId(ctx);
 
         if (!userId) {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         const message = await ctx.db.get(args.id);
 
         if (!message) {
-            throw new Error("Message not found");
+            throw new Error("Mensagem não encontrada");
         }
 
         const member = await getMember(ctx, message.workspaceId, userId);
 
         if (!member || member._id !== message.memberId) {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         await ctx.db.patch(args.id, {
@@ -231,7 +231,7 @@ export const get = query({
         const userId = await auth.getUserId(ctx);
 
         if (!userId) {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         let _conversationId = args.conversationId;
@@ -240,7 +240,7 @@ export const get = query({
             const parentMessage = await ctx.db.get(args.parentMessageId);
 
             if (!parentMessage) {
-                throw new Error("Parent message not found");
+                throw new Error("Mensagem original não encontrada");
             }
 
             _conversationId = parentMessage.conversationId;
@@ -344,13 +344,13 @@ export const create = mutation({
         const userId = await auth.getUserId(ctx);
 
         if (!userId) {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         const member = await getMember(ctx, args.workspaceId, userId);
 
         if (!member) {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         let _conversationId = args.conversationId;
@@ -359,7 +359,7 @@ export const create = mutation({
             const parentMessage = await ctx.db.get(args.parentMessageId);
 
             if (!parentMessage) {
-                throw new Error("Parent message not found");
+                throw new Error("Mensagem original não encontrada");
             }
 
             _conversationId = parentMessage.conversationId;

@@ -31,10 +31,10 @@ export const WorkspaceHeader = ({ workspace, isAdmin }: WorkspaceHeaderProps) =>
                 name={workspace.name}
                 joinCode={workspace.joinCode}
             />
-            <PreferencesModal 
-                open={preferencesOpen} 
-                setOpen={setPreferencesOpen} 
-                initialValue={workspace.name} 
+            <PreferencesModal
+                open={preferencesOpen}
+                setOpen={setPreferencesOpen}
+                initialValue={workspace.name}
             />
             <div className="flex items-center justify-between px-4 h-[49px] gap-0.5">
                 <DropdownMenu>
@@ -57,7 +57,7 @@ export const WorkspaceHeader = ({ workspace, isAdmin }: WorkspaceHeaderProps) =>
                             </div>
                             <div className="flex flex-col items-start">
                                 <p className="font-bold">{workspace.name}</p>
-                                <p className="text-xs text-muted-foreground">Active Workspace</p>
+                                <p className="text-xs text-muted-foreground">Workspace atual</p>
                             </div>
                         </DropdownMenuItem>
                         {isAdmin && (
@@ -67,31 +67,21 @@ export const WorkspaceHeader = ({ workspace, isAdmin }: WorkspaceHeaderProps) =>
                                     className="cursor-pointer py-2"
                                     onClick={() => setInviteOpen(true)}
                                 >
-                                    Invite people to {workspace.name}
+                                    <Hint label={`Convidar pessoas para a equipe ${workspace.name}`}>
+                                        <span className="truncate">Convidar pessoas para a equipe {workspace.name}</span>
+                                    </Hint>
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem
                                     className="cursor-pointer py-2"
                                     onClick={() => setPreferencesOpen(true)}
                                 >
-                                    Preferences
+                                    Configurações
                                 </DropdownMenuItem>
                             </>
                         )}
                     </DropdownMenuContent>
                 </DropdownMenu>
-                <div className="flex items-center gap-0.5">
-                    <Hint label="Filter conversation" side="bottom">
-                        <Button variant="transparent" size="iconSm">
-                            <ListFilter className="size-4" />
-                        </Button>
-                    </Hint>
-                    <Hint label="New message" side="bottom">
-                        <Button variant="transparent" size="iconSm">
-                            <SquarePen className="size-4" />
-                        </Button>
-                    </Hint>
-                </div>
             </div>
         </>
     );

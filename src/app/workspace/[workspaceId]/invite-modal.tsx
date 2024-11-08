@@ -30,8 +30,8 @@ export const InviteModal = ({
 }: InviteModalProps) => {
     const workspaceId = useWorkspaceId();
     const [ConfirmDialog, confirm] = useConfirm(
-        "Are you sure?",
-        "This will deactivate the current invite code and generate a new one."
+        "Você tem certeza?",
+        "Isso desativará o código de convite atual e gerará um novo."
     );
 
     const { mutate, isPending } = useNewJoinCode();
@@ -43,10 +43,10 @@ export const InviteModal = ({
 
         mutate({ workspaceId }, {
             onSuccess: () => {
-                toast.success("Invite code regenerated");
+                toast.success("Código de convite regenerado");
             },
             onError: () => {
-                toast.error("Failed to regenerate invite code");
+                toast.error("Erro ao regenerar o código de convite");
             }
         });
     };
@@ -56,7 +56,7 @@ export const InviteModal = ({
 
         navigator.clipboard
             .writeText(inviteLink)
-            .then(() => toast.success("Invite link copied to clipboard"));
+            .then(() => toast.success("Código de convite copiado"));
     };
 
     return (
@@ -65,9 +65,9 @@ export const InviteModal = ({
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>Invite people to {name}</DialogTitle>
+                        <DialogTitle>Convidar pessoas para {name}</DialogTitle>
                         <DialogDescription>
-                            Use the code below to invite people to your workspace
+                            Compartilhe o código abaixo para convidar pessoas para o seu Workspace.
                         </DialogDescription>
                     </DialogHeader>
                     <div className="flex flex-col gap-y-4 items-center justify-center py-10">
@@ -79,17 +79,17 @@ export const InviteModal = ({
                             variant="ghost"
                             size="sm"
                         >
-                            Copy link
+                            Copiar link
                             <CopyIcon className="size-4 ml-2" />
                         </Button>
                     </div>
                     <div className="flex items-center justify-between w-full">
                         <Button disabled={isPending} onClick={handleNewCode} variant="outline">
-                            New code
+                            Novo código
                             <RefreshCcw className="size-4 ml-2" />
                         </Button>
                         <DialogClose asChild>
-                            <Button>Close</Button>
+                            <Button>Fechar</Button>
                         </DialogClose>
                     </div>
                 </DialogContent>

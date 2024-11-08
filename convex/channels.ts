@@ -11,7 +11,7 @@ export const remove = mutation({
         const userId = await auth.getUserId(ctx);
 
         if (!userId) {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         const channel = await ctx.db.get(args.id);
@@ -28,7 +28,7 @@ export const remove = mutation({
             .unique();
 
         if (!member || member.role !== "admin") {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         const [messages] = await Promise.all([
@@ -57,7 +57,7 @@ export const update = mutation({
         const userId = await auth.getUserId(ctx);
 
         if (!userId) {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         const channel = await ctx.db.get(args.id);
@@ -74,7 +74,7 @@ export const update = mutation({
             .unique();
 
         if (!member || member.role !== "admin") {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         await ctx.db.patch(args.id, {
@@ -94,7 +94,7 @@ export const create = mutation({
         const userId = await auth.getUserId(ctx);
 
         if (!userId) {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         const member = await ctx.db
@@ -105,7 +105,7 @@ export const create = mutation({
             .unique();
 
         if (!member || member.role !== "admin") {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         const parsedName = args.name

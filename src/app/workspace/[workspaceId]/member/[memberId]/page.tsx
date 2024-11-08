@@ -30,7 +30,7 @@ const MemberIdPage = () => {
                 setConversationId(data);
             },
             onError() {
-                toast.error("Failed to create or get conversation")
+                toast.error("Erro ao criar ou carregar conversa");
             }
         })
     }, [memberId, workspaceId, mutate]);
@@ -48,7 +48,7 @@ const MemberIdPage = () => {
             <div className="h-full flex flex-col gap-y-2 items-center justify-center">
                 <AlertTriangle className="size-6 text-muted-foreground" />
                 <span className="text-sm text-muted-foreground">
-                    Conversation not found
+                    Conversa não encontrada
                 </span>
             </div>
         );

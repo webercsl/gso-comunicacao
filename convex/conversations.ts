@@ -12,7 +12,7 @@ export const createOrGet = mutation({
         const userId = await auth.getUserId(ctx);
 
         if (!userId) {
-            throw new Error("Unauthorized");
+            throw new Error("Acesso negado");
         }
 
         const currentMember = await ctx.db
@@ -25,7 +25,7 @@ export const createOrGet = mutation({
         const otherMember = await ctx.db.get(args.memberId);
 
         if (!currentMember || !otherMember) {
-            throw new Error("Member not found");
+            throw new Error("Usuário não encontrado");
         }
 
         const existingConversation = await ctx.db

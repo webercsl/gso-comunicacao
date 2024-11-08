@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Loader } from "lucide-react";
-import { differenceInMinutes, format, isToday, isYesterday, parseISO } from "date-fns";
+import { differenceInMinutes, format, isToday, isYesterday } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { toZonedTime } from "date-fns-tz";
 
 import { useCurrentMember } from "@/features/members/api/use-current-member";
 import { GetMessagesReturnType } from "@/features/messages/api/use-get-messages";
@@ -28,10 +30,12 @@ interface MessageListProps {
 };
 
 const formatDateLabel = (dateStr: string) => {
-    const date = new Date(dateStr);
-    if (isToday(date)) return "Today";
-    if (isYesterday(date)) return "Yesterday";
-    return format(date, "EEEE, MMMM d");
+    const timeZone = 'UTC';
+    const date = toZonedTime(new Date(dateStr), timeZone);
+    
+    if (isToday(date)) return "Hoje";
+    if (isYesterday(date)) return "Ontem";
+    return format(date, "EEEE, d 'de' MMMM", { locale: ptBR });
 }
 
 export const MessageList = ({

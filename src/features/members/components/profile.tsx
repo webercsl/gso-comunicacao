@@ -34,16 +34,16 @@ export const Profile = ({ memberId, onClose }: ProfileProps) => {
     const workspaceId = useWorkspaceId();
 
     const [UpdateDialog, confirmUpdate] = useConfirm(
-        "Change role",
-        "Are you sure you want to change this member's role?",
+        "Mudar cargo",
+        "Você tem certeza que deseja mudar o cargo deste membro?",
     );
     const [LeaveDialog, confirmLeave] = useConfirm(
-        "Leave workspace",
-        "Are you sure you want to leave this workspace?",
+        "Deixar Workspace",
+        "Você tem certeza que deseja sair deste Workspace?",
     );
     const [RemoveDialog, confirmRemove] = useConfirm(
-        "Remove member",
-        "Are you sure you want to remove this member?",
+        "Remover membro",
+        "Você tem certeza que deseja remover este membro?",
     );
 
     const { data: member, isLoading: isLoadingMember } = useGetMember({ id: memberId });
@@ -61,11 +61,11 @@ export const Profile = ({ memberId, onClose }: ProfileProps) => {
 
         removeMember({ id: memberId }, {
             onSuccess: () => {
-                toast.success("Member removed");
+                toast.success("Membro removido");
                 onClose();
             },
             onError: () => {
-                toast.error("Failed to remove member");
+                toast.error("Erro ao remover membro");
             }
         })
     };
@@ -78,27 +78,27 @@ export const Profile = ({ memberId, onClose }: ProfileProps) => {
         removeMember({ id: memberId }, {
             onSuccess: () => {
                 router.replace("/");
-                toast.success("You left the workspace");
+                toast.success("Você saiu do Workspace");
                 onClose();
             },
             onError: () => {
-                toast.error("Failed to leave the workspace");
+                toast.error("Erro ao sair do Workspace");
             }
         })
     };
 
-    const onUpdate = async (role: "admin" | "member") => {
+    const onUpdate = async (role: "admin" | "membro") => {
         const ok = await confirmUpdate();
 
         if (!ok) return;
 
         updateMember({ id: memberId, role }, {
             onSuccess: () => {
-                toast.success("Role updated");
+                toast.success("Cargo alterado");
                 onClose();
             },
             onError: () => {
-                toast.error("Failed to change role");
+                toast.error("Erro ao alterar cargo");
             }
         })
     };
@@ -107,7 +107,7 @@ export const Profile = ({ memberId, onClose }: ProfileProps) => {
         return (
             <div className="h-full flex flex-col">
                 <div className="h-[49px] flex justify-between items-center px-4 border-b">
-                    <p className="text-lg font-bold">Profile</p>
+                    <p className="text-lg font-bold">Perfil</p>
                     <Button onClick={onClose} size="iconSm" variant="ghost">
                         <XIcon className="size-5 stroke-[1.5]" />
                     </Button>
@@ -123,20 +123,24 @@ export const Profile = ({ memberId, onClose }: ProfileProps) => {
         return (
             <div className="h-full flex flex-col">
                 <div className="h-[49px] flex justify-between items-center px-4 border-b">
-                    <p className="text-lg font-bold">Profile</p>
+                    <p className="text-lg font-bold">Perfil</p>
                     <Button onClick={onClose} size="iconSm" variant="ghost">
                         <XIcon className="size-5 stroke-[1.5]" />
                     </Button>
                 </div>
                 <div className="flex flex-col gap-y-2 h-full items-center justify-center">
                     <AlertTriangle className="size-5 text-muted-foreground" />
-                    <p className="text-sm text-muted-foreground">Profile not found</p>
+                    <p className="text-sm text-muted-foreground">Perfil não encontrado</p>
                 </div>
             </div>
         );
     }
-
-    const avatarFallback = member.user.name?.[0] ?? "M";
+    
+    const nameParts = member.user.name?.split(" ");
+    const avatarFallback = nameParts && nameParts.length > 1 
+        ? nameParts[0].charAt(0).toUpperCase() + nameParts[1].charAt(0).toUpperCase()
+        : nameParts?.[0]?.charAt(0).toUpperCase()
+        ?? "M";
 
     return (
         <>
@@ -145,7 +149,7 @@ export const Profile = ({ memberId, onClose }: ProfileProps) => {
             <UpdateDialog />
             <div className="h-full flex flex-col">
                 <div className="h-[49px] flex justify-between items-center px-4 border-b">
-                    <p className="text-lg font-bold">Profile</p>
+                    <p className="text-lg font-bold">Perfil</p>
                     <Button onClick={onClose} size="iconSm" variant="ghost">
                         <XIcon className="size-5 stroke-[1.5]" />
                     </Button>
@@ -153,7 +157,7 @@ export const Profile = ({ memberId, onClose }: ProfileProps) => {
                 <div className="flex flex-col items-center justify-center p-4">
                     <Avatar className="max-w-[256px] max-h-[256px] size-full">
                         <AvatarImage src={member.user.image} />
-                        <AvatarFallback className="aspect-square text-6xl">
+                        <AvatarFallback className="aspect-square text-8xl">
                             {avatarFallback}
                         </AvatarFallback>
                     </Avatar>
@@ -172,26 +176,26 @@ export const Profile = ({ memberId, onClose }: ProfileProps) => {
                                 <DropdownMenuContent className="w-full">
                                     <DropdownMenuRadioGroup
                                         value={member.role}
-                                        onValueChange={(role) => onUpdate(role as "admin" | "member")}
+                                        onValueChange={(role) => onUpdate(role as "admin" | "membro")}
                                     >
                                         <DropdownMenuRadioItem value="admin">
                                             Admin
                                         </DropdownMenuRadioItem>
-                                        <DropdownMenuRadioItem value="member">
-                                            Member
+                                        <DropdownMenuRadioItem value="membro">
+                                            Membro
                                         </DropdownMenuRadioItem>
                                     </DropdownMenuRadioGroup>
                                 </DropdownMenuContent>
                             </DropdownMenu>
                             <Button onClick={onRemove} variant="outline" className="w-full">
-                                Remove
+                                Remover
                             </Button>
                         </div>
                     ) : currentMember?._id === memberId &&
                         currentMember?.role !== "admin" ? (
                         <div className="mt-4">
                             <Button onClick={onLeave} variant="outline" className="w-full">
-                                Leave
+                                Sair
                             </Button>
                         </div>
                     ) : null
@@ -199,14 +203,14 @@ export const Profile = ({ memberId, onClose }: ProfileProps) => {
                 </div>
                 <Separator />
                 <div className="flex flex-col p-4">
-                    <p className="text-sm font-bold mb-4">Contact information</p>
+                    <p className="text-sm font-bold mb-4">Informações de contato</p>
                     <div className="flex items-center gap-2">
                         <div className="size-9 rounded-md bg-muted flex items-center justify-center">
                             <MailIcon className="size-4" />
                         </div>
                         <div className="flex flex-col">
                             <p className="text-[13px] font-semibold text-muted-foreground">
-                                Email Adress
+                                Endereço de e-mail
                             </p>
                             <Link
                                 href={`mailto:${member.user.email}`}

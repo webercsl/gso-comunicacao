@@ -29,7 +29,7 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
         e.preventDefault();
 
         if (password !== confirmPassword) {
-            setError("Senhas não conferem");
+            setError("Senhas não coincidem");
             return;
         }
 
@@ -55,10 +55,10 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
         <Card className="w-full h-full p-8">
             <CardHeader className="px-0 pt-0">
                 <CardTitle>
-                    Sign up to continue
+                    Crie uma conta
                 </CardTitle>
                 <CardDescription>
-                    Use your e-mail or another service to continue
+                    Use seu e-mail ou outro serviço para continuar
                 </CardDescription>
             </CardHeader>
             {!!error && (
@@ -100,7 +100,7 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
                         type="password"
                         required
                     />
-                    <Button type="submit" className="w-full" size="lg" disabled={pending}>
+                    <Button type="submit" className="w-full bg-[#000] hover:bg-[#000000e1]" size="lg" disabled={pending}>
                         Continuar
                     </Button>
                 </form>
@@ -128,7 +128,7 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
                     </Button>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                    Already have an account? <span onClick={() => setState("signIn")} className="text-sky-700 hover:underline cursor-pointer">Sign in</span>
+                    Já possuí uma conta? <span onClick={() => setState("signIn")} className="text-green-700 hover:underline cursor-pointer">Login</span>
                 </p>
             </CardContent>
         </Card>

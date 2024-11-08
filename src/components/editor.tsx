@@ -3,6 +3,7 @@ import { Delta, Op } from "quill/core";
 import { MdSend } from "react-icons/md";
 import { PiTextAa } from "react-icons/pi"
 import Quill, { type QuillOptions } from "quill";
+import MagicUrl from 'quill-magic-url'
 import { ImageIcon, Smile, XIcon } from "lucide-react";
 import { MutableRefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
 
@@ -13,6 +14,7 @@ import { Button } from "./ui/button";
 import { EmojiPopover } from "./emoji-popover";
 
 import "quill/dist/quill.snow.css";
+Quill.register('modules/magicUrl', MagicUrl)
 
 type EditorValue = {
     image: File | null;
@@ -32,7 +34,7 @@ interface EditorProps {
 const Editor = ({
     onCancel,
     onSubmit,
-    placeholder = "Write something...",
+    placeholder = "Escreva algo...",
     defaultValue = [],
     disabled = false,
     innerRef,
@@ -98,7 +100,13 @@ const Editor = ({
                             },
                         },
                     }
-                }
+                },
+                magicUrl: {
+                    // Regex used to check URLs during typing
+                    urlRegularExpression: /(https?:\/\/[\S]+)|(www.[\S]+)|(tel:[\S]+)/g,
+                    // Regex used to check URLs on paste
+                    globalRegularExpression: /(https?:\/\/|www\.|tel:)[\S]+/g,
+                },
             }
         };
 
@@ -166,7 +174,7 @@ const Editor = ({
                 {!!image && (
                     <div className="p-2">
                         <div className="relative size-[62px] flex items-center justify-center group/image">
-                            <Hint label="Remove Image">
+                            <Hint label="Excluir Imagem">
                                 <button
                                     onClick={() => {
                                         setImage(null);
@@ -179,7 +187,7 @@ const Editor = ({
                             </Hint>
                             <Image
                                 src={URL.createObjectURL(image)}
-                                alt="Uploaded"
+                                alt="Carregada"
                                 fill
                                 className="rounded-xl overflow-hidden border object-cover"
                             />
@@ -187,7 +195,7 @@ const Editor = ({
                     </div>
                 )}
                 <div className="flex px-2 pb-2 z-[5]">
-                    <Hint label={isToolbarVisible ? "Hide formatting" : "Show formatting"}>
+                    <Hint label={isToolbarVisible ? "Ocultar formatação" : "Exibir formatação"}>
                         <Button
                             disabled={disabled}
                             size="iconSm"
@@ -207,7 +215,7 @@ const Editor = ({
                         </Button>
                     </EmojiPopover>
                     {variant === "create" && (
-                        <Hint label="Image">
+                        <Hint label="Imagem">
                             <Button
                                 disabled={disabled}
                                 size="iconSm"
@@ -226,11 +234,11 @@ const Editor = ({
                                 onClick={onCancel}
                                 disabled={disabled}
                             >
-                                Cancel
+                                Cancelar
                             </Button>
                             <Button
                                 size="sm"
-                                onClick={() => { 
+                                onClick={() => {
                                     onSubmit({
                                         body: JSON.stringify(quillRef.current?.getContents()),
                                         image,
@@ -239,14 +247,14 @@ const Editor = ({
                                 disabled={disabled || isEmpty}
                                 className="bg-[#007a5a] hover:bg-[#007a5a]/80 text-white"
                             >
-                                Save
+                                Salvar
                             </Button>
                         </div>
                     )}
                     {variant === "create" && (
                         <Button
                             disabled={disabled || isEmpty}
-                            onClick={() => { 
+                            onClick={() => {
                                 onSubmit({
                                     body: JSON.stringify(quillRef.current?.getContents()),
                                     image,
@@ -271,7 +279,7 @@ const Editor = ({
                     !isEmpty && "opacity-100"
                 )}>
                     <p>
-                        <strong>Shift + Enter</strong> to add a new line
+                        <strong>Shift + Enter</strong> para adicionar uma nova linha.
                     </p>
                 </div>
             )}

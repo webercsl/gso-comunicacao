@@ -59,7 +59,7 @@ export const ChatInput = ({ placeholder }: ChatInputProps) => {
                 const url = await generateUploadUrl({}, { throwError: true });
 
                 if (!url) {
-                    throw new Error("Url not found");
+                    throw new Error("Url não encontrada");
                 }
 
                 const result = await fetch(url, {
@@ -69,7 +69,7 @@ export const ChatInput = ({ placeholder }: ChatInputProps) => {
                 });
 
                 if (!result.ok) {
-                    throw new Error("Failed to upload image");
+                    throw new Error("Erro ao enviar imagem");
                 }
 
                 const { storageId } = await result.json();
@@ -81,7 +81,7 @@ export const ChatInput = ({ placeholder }: ChatInputProps) => {
 
             setEditorKey((prevKey) => prevKey + 1);
         } catch (error) {
-            toast.error("Failed to send message");
+            toast.error("Erro ao enviar mensagem");
         } finally {
             setIsPending(false);
             editorRef?.current?.enable(true);

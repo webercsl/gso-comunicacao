@@ -51,7 +51,7 @@ export const Conversation = ({ id }: ConversationProps) => {
                 canLoadMore={status === "CanLoadMore"}
             />
             <ChatInput
-                placeholder={`Message ${member?.user.name}`}
+                placeholder={`Enviar mensagem para ${member?.user.name}`}
                 conversationId={id}
             />
         </div>

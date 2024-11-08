@@ -3,7 +3,9 @@ import { toast } from "sonner";
 import dynamic from "next/dynamic";
 import { useRef, useState } from "react";
 import { AlertTriangle, Loader, XIcon } from "lucide-react";
-import { differenceInMinutes, format, isToday, isYesterday, parseISO } from "date-fns";
+import { differenceInMinutes, format, isToday, isYesterday } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { toZonedTime } from "date-fns-tz";
 
 import { useGetMessage } from "@/features/messages/api/use-get-message";
 import { useGetMessages } from "@/features/messages/api/use-get-messages";
@@ -36,11 +38,13 @@ type CreateMessageValues = {
 };
 
 const formatDateLabel = (dateStr: string) => {
-    const date = new Date(dateStr);
-    if (isToday(date)) return "Today";
-    if (isYesterday(date)) return "Yesterday";
-    return format(date, "EEEE, MMMM d");
-};
+    const timeZone = 'UTC';
+    const date = toZonedTime(new Date(dateStr), timeZone);
+    
+    if (isToday(date)) return "Hoje";
+    if (isYesterday(date)) return "Ontem";
+    return format(date, "EEEE, d 'de' MMMM", { locale: ptBR });
+}
 
 export const Thread = ({ messageId, onClose }: ThreadProps) => {
     const channelId = useChannelId();
@@ -88,7 +92,7 @@ export const Thread = ({ messageId, onClose }: ThreadProps) => {
                 const url = await generateUploadUrl({}, { throwError: true });
 
                 if (!url) {
-                    throw new Error("Url not found");
+                    throw new Error("Url não encontrado");
                 }
 
                 const result = await fetch(url, {
@@ -98,7 +102,7 @@ export const Thread = ({ messageId, onClose }: ThreadProps) => {
                 });
 
                 if (!result.ok) {
-                    throw new Error("Failed to upload image");
+                    throw new Error("Erro ao carregar imagem");
                 }
 
                 const { storageId } = await result.json();
@@ -110,7 +114,7 @@ export const Thread = ({ messageId, onClose }: ThreadProps) => {
 
             setEditorKey((prevKey) => prevKey + 1);
         } catch (error) {
-            toast.error("Failed to send message");
+            toast.error("Erro ao enviar mensagem");
         } finally {
             setIsPending(false);
             editorRef?.current?.enable(true);
@@ -134,7 +138,7 @@ export const Thread = ({ messageId, onClose }: ThreadProps) => {
         return (
             <div className="h-full flex flex-col">
                 <div className="h-[49px] flex justify-between items-center px-4 border-b">
-                    <p className="text-lg font-bold">Thread</p>
+                    <p className="text-lg font-bold">Conversa</p>
                     <Button onClick={onClose} size="iconSm" variant="ghost">
                         <XIcon className="size-5 stroke-[1.5]" />
                     </Button>
@@ -150,14 +154,14 @@ export const Thread = ({ messageId, onClose }: ThreadProps) => {
         return (
             <div className="h-full flex flex-col">
                 <div className="h-[49px] flex justify-between items-center px-4 border-b">
-                    <p className="text-lg font-bold">Thread</p>
+                    <p className="text-lg font-bold">Conversa</p>
                     <Button onClick={onClose} size="iconSm" variant="ghost">
                         <XIcon className="size-5 stroke-[1.5]" />
                     </Button>
                 </div>
                 <div className="flex flex-col gap-y-2 h-full items-center justify-center">
                     <AlertTriangle className="size-5 text-muted-foreground" />
-                    <p className="text-sm text-muted-foreground">Message not found</p>
+                    <p className="text-sm text-muted-foreground">Mensagem não encontrada</p>
                 </div>
             </div>
         );
@@ -166,7 +170,7 @@ export const Thread = ({ messageId, onClose }: ThreadProps) => {
     return (
         <div className="h-full flex flex-col">
             <div className="h-[49px] flex justify-between items-center px-4 border-b">
-                <p className="text-lg font-bold">Thread</p>
+                <p className="text-lg font-bold">Conversa</p>
                 <Button onClick={onClose} size="iconSm" variant="ghost">
                     <XIcon className="size-5 stroke-[1.5]" />
                 </Button>
@@ -264,7 +268,7 @@ export const Thread = ({ messageId, onClose }: ThreadProps) => {
                     onSubmit={handleSubmit}
                     innerRef={editorRef}
                     disabled={isPending}
-                    placeholder="Reply.."
+                    placeholder="Responder.."
                 />
             </div>
         </div>

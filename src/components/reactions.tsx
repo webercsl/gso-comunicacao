@@ -34,7 +34,7 @@ export const Reactions = ({ data, onChange }: ReactionsProps) => {
             {data.map((reaction) => (
                 <Hint
                     key={reaction._id}
-                    label={`${reaction.count} ${reaction.count === 1 ? "person" : "people"} reacted with ${reaction.value}`}
+                    label={`${reaction.count} ${reaction.count === 1 ? "pessoa reagiu" : "pessoas reagiram"} com ${reaction.value}`}
                 >
                     <button
                         onClick={() => onChange(reaction.value)}
@@ -55,7 +55,7 @@ export const Reactions = ({ data, onChange }: ReactionsProps) => {
                 </Hint>
             ))}
             <EmojiPopover
-                hint="Add reaction"
+                hint="Reagir"
                 onEmojiSelect={(emoji) => onChange(emoji)}
             >
                 <button className="h-7 px-3 rounded-full bg-slate-200/70 border border-transparent hover:border-slate-500 text-slate-800 flex items-center gap-x-1">
