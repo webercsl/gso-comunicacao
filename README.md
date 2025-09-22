@@ -27,7 +27,7 @@ Certifique-se de ter os seguintes softwares instalados em sua máquina:
 
 1. Clone o repositório
 ```bash
-  git clone https://github.com/webercsl/slack-clone.git nome-do-repositorio
+  git clone https://github.com/webercsl/gso-comunicacao.git nome-do-repositorio
   cd nome-do-repositorio
 ```
 
